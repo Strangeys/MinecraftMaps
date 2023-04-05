@@ -1,0 +1,146 @@
+<map proto="1.4.0">
+<name>Assembly</name>
+<version>1.1.3</version>
+<objective>Capture the enemy flag as many times before time runs out</objective>
+<authors>
+    <author uuid="459fd919-0d58-401a-9601-6cab1eb721ab"/>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/>
+    <author uuid="cbdc7b1d-7a07-465b-bebb-4f20bfb8ebd8"/>
+    <author uuid="2958ea4c-3501-404e-88cc-12e8632f68cc"/>
+</authors>
+<teams>
+    <team id="orange" color="gold" max="5" max-overfill="5">Orange</team>
+    <team id="blue" color="blue" max="5" max-overfill="5">Blue</team>
+</teams>
+<kits>
+    <kit id="main-kit">
+        <clear/>
+        <game-mode>adventure</game-mode>
+        <item slot="0" unbreakable="true" material="stone sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="2" amount="1" material="golden apple"/>
+        <item slot="8" amount="16" material="arrow"/>
+        <chestplate unbreakable="true" material="chainmail chestplate"/>
+        <boots unbreakable="true" material="iron boots">
+            <enchantment level="2">protection projectile</enchantment>
+        </boots>
+        <effect duration="4" amplifier="10">resistance</effect>
+        <effect duration="4" amplifier="10">regeneration</effect>
+        <effect>night vision</effect>
+    </kit>
+    <kit id="blue-kit" parents="main-kit">
+        <helmet unbreakable="true" color="0066cc" material="leather helmet"/>
+        <leggings unbreakable="true" color="0066cc" material="leather leggings"/>
+    </kit>
+    <kit id="orange-kit" parents="main-kit">
+        <helmet unbreakable="true" color="d87f33" material="leather helmet"/>
+        <leggings unbreakable="true" color="d87f33" material="leather leggings"/>
+    </kit>
+    <kit id="flag-carry" force="true">
+        <effect>slowness</effect>
+    </kit>
+    <kit id="flag-reset" force="true">
+        <effect duration="0" amplifier="10">slowness</effect>
+    </kit>
+    <kit id="observers">
+        <effect>night vision</effect>
+    </kit>
+</kits>
+<kill-reward>
+    <item material="golden apple"/>
+    <item amount="8" material="arrow"/>
+</kill-reward>
+<hunger>
+	<depletion>off</depletion>
+</hunger>
+<spawns>
+    <default>
+        <regions yaw="90">
+            <cylinder base=".5,25,.5" radius="1" height="2"/>
+        </regions>
+    </default>
+    <spawn team="orange" filter="spawn1" kit="orange-kit"><regions yaw="0"><cylinder base="2,6.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="orange" filter="spawn2" kit="orange-kit"><regions yaw="0"><cylinder base="2,50.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="orange" filter="spawn3" kit="orange-kit"><regions yaw="0"><cylinder base="2,100.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="orange" filter="spawn4" kit="orange-kit"><regions yaw="0"><cylinder base="2,150.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="orange" filter="spawn5" kit="orange-kit"><regions yaw="0"><cylinder base="2,200.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="orange" filter="spawn6" kit="orange-kit"><regions yaw="0"><cylinder base="2,250.5,-34" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn1" kit="blue-kit"><regions yaw="180"><cylinder base="-1,6.5,35" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn2" kit="blue-kit"><regions yaw="180"><cylinder base="-1,50.5,35" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn3" kit="blue-kit"><regions yaw="180"><cylinder base="-1,100.5,35" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn4" kit="blue-kit"><regions yaw="180"><cylinder base="-1,150.5,35" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn5" kit="blue-kit"><regions yaw="180"><cylinder base="-1,200.5,35" radius="1" height="1"/></regions></spawn>
+    <spawn team="blue" filter="spawn6" kit="blue-kit"><regions yaw="180"><cylinder base="-1,250.5,35" radius="1" height="1"/></regions></spawn>
+</spawns>
+<respawn delay="5s" auto="true" blackout="true"/>
+<filters>
+    <team id="orange-only">orange</team>
+    <team id="blue-only">blue</team>
+    <time id="flag-respawns">0</time>
+    <not id="spawn1">
+        <time>2m</time>
+    </not>
+    <all id="spawn2">
+        <time>2m</time>
+        <not><time>4m</time></not>
+    </all>
+    <all id="spawn3">
+        <time>4m</time>
+        <not><time>6m</time></not>
+    </all>
+    <all id="spawn4">
+        <time>6m</time>
+        <not><time>8m</time></not>
+    </all>
+    <all id="spawn5">
+        <time>8m</time>
+        <not><time>10m</time></not>
+    </all>
+    <all id="spawn6">
+        <time>10m</time>
+    </all>
+</filters>
+<regions>
+    <cylinder id="blue-net" base="-1,15,23" radius="2" height="2"/>
+    <cylinder id="orange-net" base="2,15,-22" radius="2" height="2"/>
+    <apply block="never"/>
+</regions>
+<toolrepair>
+    <tool>iron sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemkeep>
+    <item>iron ingot</item>
+</itemkeep>
+<flags flag-proximity-metric="none" net-proximity-metric="none">
+    <flag id="orange-flag" name="Orange Flag" owner="orange" pickup-kit="flag-carry" drop-kit="flag-reset">
+        <post pickup-filter="blue-only" recover-time="40s" respawn-time="10s">2,15,-23</post>
+    </flag>
+    <flag id="blue-flag" name="Blue Flag" owner="blue" pickup-kit="flag-carry" drop-kit="flag-reset">
+        <post pickup-filter="orange-only" recover-time="40s" respawn-time="10s">-2,15,23</post>
+    </flag>
+    <flags points="1">
+        <net region="orange-net" flag="blue-flag" respawn-filter="flag-respawns"/>
+        <net region="blue-net" flag="orange-flag" respawn-filter="flag-respawns"/>
+    </flags>
+</flags>
+<score>
+    <mercy>5</mercy>
+</score>
+<time overtime="1m" max-overtime="6m" result="score">12m</time>
+<toolrepair>
+	<tool>stone sword</tool>
+	<tool>bow</tool>
+</toolrepair>
+<itemkeep>
+    <item>arrow</item>
+    <item>golden apple</item>
+</itemkeep>
+<itemremove>
+    <item>leather helmet</item>
+    <item>chainmail chestplate</item>
+    <item>leather leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<timelock>on</timelock>
+</map>

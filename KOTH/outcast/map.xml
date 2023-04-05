@@ -1,0 +1,112 @@
+<map proto="1.4.2">
+<name>OutCast</name>
+<version>1.0.8</version>
+<objective>Be the first team to reach 750 points!</objective>
+<authors>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- Strangey -->
+</authors>
+<teams>
+    <team id="blue" color="blue" max="5" max-overfill="5">Blue</team>
+    <team id="red" color="dark red" max="5" max-overfill="5">Red</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" material="stone sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" amount="10" material="arrow"/>
+        <helmet unbreakable="true" team-color="true" material="leather helmet"/>
+        <chestplate unbreakable="true" team-color="true" material="leather chestplate"/>
+        <leggings unbreakable="true" material="chainmail leggings">
+            <enchantment level="3">projectile_protection</enchantment>
+        </leggings>
+        <boots unbreakable="true" material="iron boots"/>
+        <effect duration="4s" amplifier="255">resistance</effect>
+    </kit>
+</kits>
+<spawns>
+    <default>
+        <region yaw="0">
+            <point>40.5,72,67.5</point>
+        </region>
+    </default>
+    <spawn team="blue" kit="spawn-kit">
+        <region yaw="90">
+            <point>87.5,32,46.5</point>
+        </region>
+    </spawn>
+    <spawn team="red" kit="spawn-kit">
+        <region yaw="-90">
+            <point>-6.5,32,46.5</point>
+        </region>
+    </spawn>
+</spawns>
+<regions>
+    <apply block="never" use="never"/>
+</regions>
+<king>
+    <hills required="false" points="1" time-multiplier="0" show-progress="true" neutral-state="true" incremental="true" permanent="false">
+        <hill name="Hill A" capture-time="3s">
+            <capture>
+                <cuboid min="22,37,45" max="28,39,51"/>
+            </capture>
+            <progress>
+                <cylinder base="25,0,48" radius="7" height="38"/>
+            </progress>
+            <captured>
+                <cylinder base="25,0,48" radius="7" height="61"/>
+            </captured>
+        </hill>
+        <hill name="Middle" capture-time="5s">
+            <capture>
+                <cuboid min="44,40,21" max="37,42,28"/>
+            </capture>
+            <progress>
+                <cylinder base="40.5,0,24.5" radius="9" height="40"/>
+            </progress>
+            <captured>
+                <cylinder base="40.5,0,24.5" radius="9" height="64"/>
+            </captured>
+        </hill>
+        <hill name="Hill B" capture-time="3s">
+            <capture>
+                <cuboid min="59,37,45" max="53,39,51"/>
+            </capture>
+            <progress>
+                <cylinder base="56,0,48" radius="7" height="38"/>
+            </progress>
+            <captured>
+                <cylinder base="56,0,48" radius="7" height="61"/>
+            </captured>
+        </hill>
+    </hills>
+</king>
+<score>
+    <limit>750</limit>
+</score>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<itemkeep>
+    <item>stone sword</item>
+    <item>bow</item>
+    <item>golden apple</item>
+    <item>arrow</item>
+</itemkeep>
+<kill-reward>
+    <item material="golden apple"/>
+    <item amount="5" material="arrow"/>
+</kill-reward>
+<respawn delay="4s" auto="true"/>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+</map>

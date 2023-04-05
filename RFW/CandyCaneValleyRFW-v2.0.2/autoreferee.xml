@@ -1,0 +1,55 @@
+<map protocol="2.0.0">
+  <meta>
+    <name>Candy Cane Valley RFW</name>
+    <version>2.0.2</version>
+    <creators>
+      <creator>Strangey</creator>
+    </creators>
+  </meta>
+  <teams>
+    <team color="BLUE">
+      <name>Right</name>
+      <spawn>
+        <location pos="-19,155,-8" yaw="-90" />
+      </spawn>
+    </team>
+    <team color="RED">
+      <name>Left</name>
+      <spawn>
+        <location pos="-19,155,-33" yaw="-90" />
+      </spawn>
+    </team>
+  </teams>
+  <startregion spawn="-28,155,-21,-90">
+    <cuboid min="-43,149,-37" max="-12,164,-4" />
+  </startregion>
+  <regions>
+    <cuboid min="-16,0,-12" max="305,255,4">
+      <owner>Right</owner>
+    </cuboid>
+    <cuboid min="-16,0,-45" max="305,255,-29">
+      <owner>Left</owner>
+    </cuboid>
+  </regions>
+  <goals>
+    <teamgoals team="Right">
+      <block pos="48,93,4" id="35,10" />
+      <block pos="21,94,3" id="35,6" />
+      <block pos="39,93,-3" id="35,5" />
+    </teamgoals>
+    <teamgoals team="Left">
+      <block pos="48,93,-45" id="35,10" />
+      <block pos="39,93,-38" id="35,5" />
+      <block pos="21,94,-44" id="35,6" />
+    </teamgoals>
+  </goals>
+  <mechanisms>
+    <lever pos="-20,155,-11">true</lever>
+    <lever pos="-25,156,-20">true</lever>
+    <lever pos="-20,155,-30">true</lever>
+  </mechanisms>
+  <gameplay>
+    <clockstart>8am</clockstart>
+  </gameplay>
+  <protect />
+</map>

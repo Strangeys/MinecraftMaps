@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<map proto="1.4.0">
+<time overtime="1m" max-overtime="15m">45m</time>
+<name>Wallop Series X</name>
+<version>2.1.3</version>
+<objective>Destroy the monument and leak the core.</objective>
+<authors>
+    <author uuid="6bec5c3a-4934-4b19-9aa8-c7c569820f7d"/> <!-- Claf -->
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- Strangey -->
+</authors>
+<contributors>
+    <contributor uuid="9225421c-3c09-4d97-bb80-f6a77c1f360b"/> <!-- Jexel -->
+    <contributor uuid="2958ea4c-3501-404e-88cc-12e8632f68cc"/> <!-- Nix -->
+    <contributor uuid="9929437a-9b7d-4d7a-b05d-e22fe93ac042"/> <!-- triplezko -->
+    <contributor uuid="d563101f-4e74-4f14-8707-b8f32c54902b"/> <!-- Andr -->
+    <contributor uuid="a6955518-97b8-4c1d-8e76-e641b8f8822c"/> <!-- Qwuiblington -->
+</contributors>
+<teams>
+    <team id="red-team"  color="dark red" max-overfill="8" max="8" min="6">Red</team>
+    <team id="blue-team" color="blue"     max-overfill="8" max="8" min="6">Blue</team>
+</teams>
+<kits>
+    <kit id="kit-default">
+        <item slot="0"  unbreakable="true"                       >diamond sword</item>
+        <item slot="1"  unbreakable="true" enchantment="infinity">bow</item>
+        <item slot="2"  unbreakable="true"                       >diamond pickaxe</item>
+        <item slot="3"  unbreakable="true"                       >diamond axe</item>
+        <item slot="4"  amount="64"                    damage="5">wood</item>
+		<item slot="31" amount="64"                    damage="5">wood</item>
+        <item slot="5"  amount="64"                              >glass</item>
+		<item slot="32" amount="64"                              >smooth brick</item>
+		<item slot="6"  amount="32"                              >ladder</item>
+		<item slot="7"                     prevent-sharing="true">golden apple</item>
+        <item slot="8"  amount="64"                              >golden carrot</item>
+        <item slot="28"                                          >arrow</item>
+        <chestplate     unbreakable="true"                       >chainmail chestplate</chestplate>
+    </kit>
+    <kit id="kit-red" parents="kit-default">
+        <boots unbreakable="true" color="cd0000">leather boots</boots>
+    </kit>
+    <kit id="kit-blue" parents="kit-default">
+        <boots unbreakable="true" color="0066cc">leather boots</boots>
+    </kit>
+</kits>
+<spawns>
+    <default yaw="90" region="spawn-default"/>
+    <spawn team="red-team"  yaw="180" kit="kit-red"  region="spawn-red"/>
+    <spawn team="blue-team" yaw="0"   kit="kit-blue" region="spawn-blue"/>
+</spawns>
+<filters>
+    <team id="only-red">red-team</team>
+    <team id="only-blue">blue-team</team>
+	<deny id="no-stone">
+		<material>stone</material>
+	</deny>
+    <all id="only-creeper-spawn-egg">
+        <spawn>spawner egg</spawn>
+        <mob>creeper</mob>
+    </all>
+    <material id="any-stone">stone</material>
+    <material id="any-log">log</material>
+    <material id="any-wood">wood</material>
+    <material id="any-gravel">gravel</material>
+    <material id="any-smooth-brick">smooth brick</material>
+    <material id="any-smooth-stairs">smooth stairs</material>
+    <material id="any-wood-stairs">spruce wood stairs</material>
+    <material id="any-wood-step">wood step</material>
+    <material id="any-double-step">double step:8</material>
+    <any id="any-step">
+        <material>step:0</material>
+        <material>step:1</material>
+        <material>step:4</material>
+        <material>step:5</material>
+    </any>
+</filters>
+<regions>
+    <cylinder id="spawn-default" base="100.5,52,-14.5"  radius="2"   height="1"/>
+    <cylinder id="spawn-blue"    base="-14.5,9,-68.5" radius="0.9" height="0.1"/>
+    <cylinder id="spawn-red"     base="-14.5,9,39.5"   radius="0.9" height="0.1"/>
+    <negative id="not-playable">
+        <cuboid id="playable" min="56,0,68" max="-57,50,-97"/>
+    </negative>
+    <union id="protection-spawns">
+        <cuboid id="protection-spawn-blue" min="-12,8,-60"  max="-17,14,-71"/>
+        <cuboid id="protection-spawn-red"  min="-17,8,31"   max="-12,14,42"/>
+    </union>
+    <cylinder id="monument-low-red" radius="3" base="29.5,20,46.5" height="10"/>
+    <cylinder id="monument-low-blue" radius="3" base="29.5,20,-75.5" height="10"/>
+    <above id="above-50" y="50"/>
+    <apply block="never" region="above-50" message="`7You may not build outside the `b`lPlayable Region"/>
+    <apply enter="only-blue" block="never" region="protection-spawn-blue" message="`7You may not enter or modify the `9Blue`r `e`lSpawn"/>
+    <apply enter="only-red"  block="never" region="protection-spawn-red"  message="`7You may not enter or modify the `4Red`r `e`lSpawn"/>
+    <apply block="never" region="not-playable" message="`7You may not build outside the `b`lPlayable Region"/>
+	<apply block-place="no-stone"/>
+</regions>
+<destroyables repairable="false" materials="emerald block" proximity-metric="none" >
+    <destroyable owner="red-team"  name="Monument"  region="monument-low-red"/>
+    <destroyable owner="blue-team" name="Monument"  region="monument-low-blue"/>
+</destroyables>
+<cores material="obsidian" leak="3" mode-changes="true" proximity-metric="none">
+	<core team="blue-team">
+		<region>
+			<cuboid min="-17,42,-62" max="-12,37,-67"/>
+		</region>
+	</core>
+	<core team="red-team">
+		<region>
+			<cuboid min="-17,42,38" max="-12,37,33"/>
+		</region>
+	</core>
+</cores>
+<modes>
+	<mode after="10m" material="gold block" name="`6GOLD CORE MODE"/>
+	<mode after="25m" material="packed ice" name="`3PACKED ICE CORE MODE"/>
+</modes>
+<respawn delay="7s"/>
+<mobs filter="only-creeper-spawn-egg"/>
+<toolrepair>
+    <tool>arrow</tool>
+    <tool>diamond sword</tool>
+    <tool>bow</tool>
+    <tool>diamond pickaxe</tool>
+    <tool>diamond axe</tool>
+</toolrepair>
+<itemremove>
+    <item>iron plate</item>
+	<item>iron trapdoor</item>
+	<item>trap door</item>
+	<item>sign</item>
+	<item>step</item>
+	<item>seeds</item>
+	<item>stained clay</item>
+    <item>note block</item>
+    <item>wood</item>
+    <item>spruce wood stairs</item>
+    <item>smooth brick</item>
+    <item>stone</item>
+	<item>note block</item>
+	<item>jukebox</item>
+	<item>stained clay</item>
+	<item>quartz block</item>
+	<item>quartz stairs</item>
+    <item>wood step:1</item>
+    <item>step:0</item>
+    <item>grass</item>
+    <item>dirt</item>
+    <item>wool:10</item>
+    <item>wool:7</item>
+    <item>carpet</item>
+    <item>stained clay:10</item>
+    <item>nether fence</item>
+    <item>glowstone dust</item>
+    <item>carpet:11</item>
+    <item>rails</item>
+    <item>long grass</item>
+    <item>sapling</item>
+    <item>red rose</item>
+    <item>melon</item>
+    <item>hay block</item>
+    <item>flower pot</item>
+    <item>emerald block</item>
+	<item>glass</item>
+	<item>ladder</item>
+	<item>chainmail chestplate</item>
+	<item>leather boots</item>
+	<item>golden apple</item>
+	<item>golden carrot</item>
+	<item>obsidian</item>
+	<item>gold block</item>
+</itemremove>
+<tnt>
+	<dispenser-tnt-limit>0</dispenser-tnt-limit>
+	<dispenser-tnt-multiplier>0</dispenser-tnt-multiplier>
+</tnt>
+<crafting>
+	<disable>iron trapdoor</disable>
+</crafting>
+<kill-reward>
+    <kit>
+		<item damage="8261" material="373"/>
+        <item amount="32" damage="5" material="wood"/>
+		<item amount="32"            material="glass"/>
+    </kit>
+</kill-reward>
+<timelock>on</timelock>
+</map>

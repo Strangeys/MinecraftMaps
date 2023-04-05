@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<map proto="1.4.0">
+<name>Metropolis</name>
+<version>1.1.0</version>
+<objective>Capture the most flags in 12 minutes.</objective>
+<authors>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- Strangey -->
+    <author uuid="2958ea4c-3501-404e-88cc-12e8632f68cc"/> <!-- Nixani aka King_Coolwhip -->
+    <author uuid="6bec5c3a-4934-4b19-9aa8-c7c569820f7d"/> <!-- Claf -->
+</authors>
+<contributors>
+    <contributor uuid="d563101f-4e74-4f14-8707-b8f32c54902b"/> <!-- MomDadVicky -->
+    <contributor uuid="a6955518-97b8-4c1d-8e76-e641b8f8822c"/> <!-- Qwuiblington -->
+    <contributor uuid="9929437a-9b7d-4d7a-b05d-e22fe93ac042"/> <!-- triplezko -->
+</contributors>
+<teams>
+    <team id="red-team" color="dark red" max="7" max-overfill="7">Red</team>
+    <team id="blue-team" color="blue" max="7" max-overfill="7">Blue</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" material="stone sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="2" amount="6" material="leaves"/>
+        <item slot="3" unbreakable="true" material="shears"/>
+        <item slot="4" amount="64" material="golden carrot"/>
+        <item slot="8" amount="32" material="arrow"/>
+        <effect duration="5s">instant_health</effect>
+    </kit>
+    <kit id="red-kit" parents="spawn-kit">
+        <helmet locked="true" color="cd0000" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="cd0000" unbreakable="true" material="leather chestplate"/>
+        <leggings locked="true" unbreakable="true" material="iron leggings">
+            <enchantment>projectile_protection</enchantment>
+        </leggings>
+        <boots locked="true" color="cd0000" unbreakable="true" material="leather boots"/>
+    </kit>
+    <kit id="blue-kit" parents="spawn-kit">
+        <helmet locked="true" color="0066cc" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="0066cc" unbreakable="true" material="leather chestplate"/>
+        <leggings locked="true" unbreakable="true" material="iron leggings">
+            <enchantment>projectile_protection</enchantment>
+        </leggings>
+        <boots locked="true" color="0066cc" unbreakable="true" material="leather boots"/>
+    </kit>
+</kits>
+<spawns>
+    <spawn team="red-team" kit="red-kit">
+        <regions yaw="45">
+            <point>237.5,44,113.5</point>
+        </regions>
+    </spawn>
+    <spawn team="blue-team" kit="blue-kit">
+        <regions yaw="-135">
+            <point>137.5,44,213.5</point>
+        </regions>
+    </spawn>
+    <default>
+        <regions yaw="90">
+            <point>271.5,89.1,163.5</point>
+        </regions>
+    </default>
+</spawns>
+<flags>
+    <flag id="yellow-flag" name="Yellow Flag" owner="red-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-blue">241.5,48,161.5</post>
+    </flag>
+    <flag id="orange-flag" name="Orange Flag" owner="red-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-blue">189.5,48,109.5</post>
+    </flag>
+    <flag id="magenta-flag" name="Magenta Flag" owner="blue-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-red">133.5,48,165.5</post>
+    </flag>
+    <flag id="lime-flag" name="Lime Flag" owner="red-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-red">185.5,48,217.5</post>
+    </flag>
+    <flags points="1">
+        <net region="red-net" flag="magenta-flag lime-flag"/>
+        <net region="blue-net" flag="yellow-flag orange-flag"/>
+    </flags>
+</flags>
+<time>12m</time>
+<score>
+    <mercy>10</mercy>
+    <kills>0</kills>
+    <deaths>0</deaths>
+</score>
+<filters>
+    <team id="only-red">red-team</team>
+    <team id="only-blue">blue-team</team>
+    <any id="can-break">
+        <material>leaves</material>
+        <material>stained glass:10</material>
+    </any>
+</filters>
+<regions>
+    <union id="flags-regions">
+        <rectangle id="yellow-flag-region" min="244,159" max="239,164"/>
+        <rectangle id="orange-flag-region" min="187,107" max="192,112"/>
+        <rectangle id="magenta-flag-region" min="131,168" max="136,163"/>
+        <rectangle id="lime-flag-region" min="188,220" max="183,215"/>
+    </union>
+    <union id="playable-region">
+        <cuboid min="239,34,112" max="136,50,192"/>
+        <cuboid min="136,34,215" max="239,50,135"/>
+        <!-- flag extensions -->
+        <cuboid min="248,34,155" max="239,50,168"/>
+        <cuboid min="183,34,103" max="196,50,112"/>
+        <cuboid min="127,34,172" max="136,50,159"/>
+        <cuboid min="192,34,224" max="179,50,215"/>
+    </union>
+    <cylinder id="red-net" base="224.5,39,126.5" radius="3.5" height="3"/>
+    <cylinder id="blue-net" base="150.5,39,200.5" radius="3.5" height="3"/>
+    <negative id="void">
+        <region id="playable-region"/>
+    </negative>
+    <apply block="never" region="flags-regions" message="You may not place blocks around the flag!"/>
+    <apply block="can-break" region="playable-region" message="You may only place or break leaves and purple stained glass!"/>
+    <apply block="never" region="void" message="You may not build outside the playable region!"/>
+</regions>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>shears</item>
+    <item>sapling</item>
+    <item>leaves</item>
+    <item>cactus</item>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>leather leggings</item>
+    <item>leather boots</item>
+    <item>golden carrot</item>
+</itemremove>
+<itemkeep>
+    <item>golden apple</item>
+    <item>arrow</item>
+</itemkeep>
+<gamerules>
+    <doDaylightCycle>false</doDaylightCycle>
+</gamerules>
+<kill-rewards>
+    <kill-reward>
+        <item amount="8" material="arrow"/>
+        <item amount="3" material="leaves"/>
+        <item material="golden apple"/>
+    </kill-reward>
+</kill-rewards>
+<respawn delay="6s"/>
+</map>

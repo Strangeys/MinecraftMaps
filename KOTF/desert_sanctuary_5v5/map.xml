@@ -1,0 +1,138 @@
+<map proto="1.4.2">
+<name>Desert Sanctuary 5v5</name>
+<version>1.2.3</version>
+<objective>Control the flag for 200 seconds to win!</objective>
+<gamemode>kotf</gamemode>
+<authors>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!--  thestrangeboy1  -->
+    <author uuid="e3fdaea1-8a19-4378-8ad7-41cf63f5d141"/> <!--  Avaleer  -->
+</authors>
+<contributors>
+    <contributor uuid="8f9344cf-7367-4e28-9f24-5c66422f28c9"/> <!--  Timothee38  -->
+    <contributor uuid="f1352a57-4fe3-4f0c-b867-56b771fc1a0f" contribution="5v5 edit"/> <!-- teagod -->
+</contributors>
+<teams>
+    <team id="blue" color="blue" max="5" max-overfill="5">Blue</team>
+    <team id="red" color="dark red" max="5" max-overfill="5">Red</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" material="stone sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" amount="12" material="arrow"/>
+        <helmet unbreakable="true" team-color="true" material="leather helmet"/>
+        <chestplate unbreakable="true" team-color="true" material="leather chestplate"/>
+        <leggings unbreakable="true" material="chainmail leggings">
+            <enchantment level="3">projectile_protection</enchantment>
+        </leggings>
+        <boots unbreakable="true" material="iron boots">
+            <enchantment>feather_falling</enchantment>
+        </boots>
+        <effect duration="1s" amplifier="0">health boost</effect>
+        <effect duration="2s" amplifier="10">regeneration</effect>
+        <effect duration="7.5s" amplifier="255">damage resistance</effect>
+        <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="flag-kit" force="true">
+        <effect amplifier="-3">health boost</effect>
+        <effect duration="3s" amplifier="2">absorption</effect>
+    </kit>
+    <kit id="reset-health" force="true">
+        <effect duration="0s" amplifier="0">health boost</effect>
+    </kit>
+</kits>
+<spawns>
+    <default>
+        <region yaw="90">
+            <cylinder base="0.5,51,0.5" radius="2" height="0"/>
+        </region>
+    </default>
+    <spawn team="blue" kit="spawn-kit" filter="has-flag">
+        <region yaw="0">
+            <point>0.5,16,-61.5</point>
+        </region>
+    </spawn>
+    <spawn team="red" kit="spawn-kit" filter="has-flag">
+        <region yaw="180">
+            <point>0.5,16,62.5</point>
+        </region>
+    </spawn>
+</spawns>
+<filters>
+    <any id="has-flag">
+        <carrying-flag id="flag-carrier">flag</carrying-flag>
+        <not>
+            <same-team>
+                <carrying-flag>flag</carrying-flag>
+            </same-team>
+        </not>
+    </any>
+    <deny id="deny-flag-carrier">
+        <filter id="flag-carrier"/>
+    </deny>
+</filters>
+<regions>
+    <complement id="spawn-sides">
+        <union>
+            <rectangle id="blue-left" min="23,-60" max="36,-47"/>
+            <rectangle id="blue-right" min="-35,-60" max="-22,-47"/>
+            <rectangle id="red-left" min="-22,48" max="-35,61"/>
+            <rectangle id="red-right" min="23,48" max="36,61"/>
+        </union>
+        <below y="0"/>
+    </complement>
+    <apply enter="deny-flag-carrier" region="spawn-sides" message="You may not enter the spawns with the flag."/>
+    <apply block="never" use="never"/>
+</regions>
+<flags>
+    <flag id="flag"
+          name="Flag"
+          color="purple"
+          shared="true"
+          points-rate="1"
+          pickup-kit="flag-kit"
+          drop-kit="reset-health"
+          flag-proximity-metric="none"
+          show-respawn-on-pickup="true">
+        <post return-time="0s" respawn-time="20s">
+            <post name="Mid Post" respawn-filter="never">0.5,9,0.5</post>
+            <post name="East Post" yaw="-90">23.5,14,0.5</post>
+            <post name="West Post" yaw="90">-22.5,14,0.5</post>
+        </post>
+    </flag>
+</flags>
+<score>
+    <limit>200</limit>
+</score>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+    <item>banner</item>
+</itemremove>
+<itemkeep>
+    <item>stone sword</item>
+    <item>bow</item>
+    <item>golden apple</item>
+    <item>arrow</item>
+</itemkeep>
+<kill-reward>
+    <item material="golden apple"/>
+    <item amount="6" material="arrow"/>
+</kill-reward>
+<respawn delay="4s" spectate="true" auto="true">
+    <message>
+        {"translate":"death.respawn.confirmed.waiting.flagDropped"}
+    </message>
+</respawn>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+</map>

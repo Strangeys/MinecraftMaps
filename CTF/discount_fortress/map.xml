@@ -1,0 +1,154 @@
+<map proto="1.4.0">
+<time overtime="1m" max-overtime="15m">12m</time>
+<name>Discount Fortress</name>
+<version>1.1.2</version>
+<objective>Capture the enemy team's flag.</objective>
+<gamemode>ctf</gamemode>
+<authors>
+    <author uuid="6bec5c3a-4934-4b19-9aa8-c7c569820f7d"/> <!-- Claf -->
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- Strangey -->
+    <author uuid="d563101f-4e74-4f14-8707-b8f32c54902b"/> <!-- Gayquil -->
+</authors>
+<contributors>
+    <contributor uuid="9929437a-9b7d-4d7a-b05d-e22fe93ac042"/> <!-- triplezko -->
+    <contributor uuid="d71152ca-187d-43c4-9901-ba001606c655"/> <!-- wylt -->
+    <contributor uuid="b1521072-6993-4fe4-ae60-dbeeb7dc0cfa"/> <!-- Antnecb -->
+    <contributor uuid="eb1f6661-e01f-4062-b2ae-cd01a9dc4b92"/> <!-- susou -->
+</contributors>
+<teams>
+    <team id="red-team" color="dark red" max="7" max-overfill="7">Red</team>
+    <team id="blue-team" color="blue" max="7" max-overfill="7">Blue</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" material="stone sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="2" amount="4" material="leaves"/>
+        <item slot="3" unbreakable="true" material="shears"/>
+        <item slot="4" amount="64" material="golden carrot"/>
+        <item slot="5" material="golden apple"/>
+        <item slot="8" amount="32" material="arrow"/>
+        <effect duration="5s">instant_health</effect>
+    </kit>
+    <kit id="red-kit" parents="spawn-kit">
+        <helmet locked="true" color="cd0000" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="cd0000" unbreakable="true" material="leather chestplate"/>
+        <leggings locked="true" unbreakable="true" material="iron leggings">
+            <enchantment>projectile_protection</enchantment>
+        </leggings>
+        <boots locked="true" color="cd0000" unbreakable="true" material="leather boots"/>
+    </kit>
+    <kit id="blue-kit" parents="spawn-kit">
+        <helmet locked="true" color="0066cc" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="0066cc" unbreakable="true" material="leather chestplate"/>
+        <leggings locked="true" unbreakable="true" material="iron leggings">
+            <enchantment>projectile_protection</enchantment>
+        </leggings>
+        <boots locked="true" color="0066cc" unbreakable="true" material="leather boots"/>
+    </kit>
+    <kit id="flagreset" force="true">
+        <potion duration="1" amplifier="10">regeneration</potion>
+    </kit>
+</kits>
+<spawns>
+    <spawn team="red-team" kit="red-kit">
+        <regions yaw="0">
+            <point>-19.0,1,-442.0</point>
+        </regions>
+    </spawn>
+    <spawn team="blue-team" kit="blue-kit">
+        <regions yaw="180">
+            <point>18.0,1,-299.0</point>
+        </regions>
+    </spawn>
+    <default>
+        <regions yaw="0">
+            <point>14.5,26.5,-413.5</point>
+        </regions>
+    </default>
+</spawns>
+<flags flag-proximity-metric="none">
+    <flag id="red-flag" name="Red Flag" owner="red-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-blue">14.5,10,-429.5</post>
+    </flag>
+    <flag id="blue-flag" name="Blue Flag" owner="blue-team">
+        <post recover-time="20s" respawn-time="15s" pickup-filter="only-red">-15.5,10,-311.5</post>
+    </flag>
+    <flags points="1">
+        <net region="red-flag-region" flag="blue-flag"/>
+        <net region="blue-flag-region" flag="red-flag"/>
+    </flags>
+</flags>
+<score>
+    <kills>0</kills>
+    <deaths>0</deaths>
+</score>
+<filters>
+    <team id="only-red">red-team</team>
+    <team id="only-blue">blue-team</team>
+    <any id="can-break">
+        <material>leaves</material>
+        <material>glass</material>
+    </any>
+    <carrying-flag id="red-flag-carrier">red-flag</carrying-flag>
+    <carrying-flag id="blue-flag-carrier">blue-flag</carrying-flag>
+</filters>
+<regions>
+    <union id="flags-region">
+        <cuboid id="red-flag-region" min="16,9,-428" max="13,14,-431"/>
+        <cuboid id="blue-flag-region" min="-17,9,-313" max="-14,14,-310"/>
+    </union>
+    <union id="spawns">
+        <rectangle id="red-spawn" min="-29,-446" max="-9,-424"/>
+        <rectangle id="blue-spawn" min="28,-295" max="8,-317"/>
+    </union>
+    <union id="playable-region">
+        <rectangle min="-36,-418" max="35,-323"/>
+        <rectangle min="0,-418" max="29,-434"/>
+        <rectangle min="-1,-323" max="-30,-307"/>
+    </union>
+    <negative id="void">
+        <region id="playable-region"/>
+    </negative>
+    <apply block="never" region="flags-region" message="You may not place blocks around the flag!"/>
+    <apply block="never" region="spawns" message="You may not modify spawn!"/>
+    <apply block="can-break" region="playable-region" message="You may only place or break leaves and glass!"/>
+    <apply block="never" region="void"/>
+    <apply kit="flagreset" filter="red-flag-carrier" region="blue-flag-region"/>
+    <apply kit="flagreset" filter="blue-flag-carrier" region="red-flag-region"/>
+</regions>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>iron leggings</item>
+    <item>shears</item>
+    <item>sapling</item>
+    <item>leaves</item>
+    <item>cactus</item>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>leather leggings</item>
+    <item>leather boots</item>
+    <item>golden carrot</item>
+</itemremove>
+<!--<itemkeep>-->
+<!--    <item>golden apple</item>-->
+<!--    <item>arrow</item>-->
+<!--</itemkeep>-->
+<maxbuildheight>15</maxbuildheight>
+<gamerules>
+    <doDaylightCycle>false</doDaylightCycle>
+    <doFireTick>false</doFireTick>
+</gamerules>
+<kill-rewards>
+    <kill-reward>
+        <item amount="8" material="arrow"/>
+        <item amount="4" material="leaves"/>
+        <item material="golden apple"/>
+    </kill-reward>
+</kill-rewards>
+<respawn delay="6s" auto="true"/>
+</map>

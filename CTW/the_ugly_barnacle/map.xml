@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<map proto="1.4.0">
+<time overtime="1m" max-overtime="15m">45m</time>
+<name>The Ugly Barnacle</name>
+<version>1.0.1</version>
+<objective>Capture the enemy team's two wools.</objective>
+<authors>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- Strangey -->
+</authors>
+<teams>
+    <team id="red-team" color="dark red" max="8" max-overfill="8">Red</team>
+    <team id="blue-team" color="blue" max="8" max-overfill="8">Blue</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <item slot="0" material="iron sword" unbreakable="true"/>
+        <item slot="1" material="bow" unbreakable="true">
+            <enchantment>infinity</enchantment>
+        </item>
+		<item slot="2" material="diamond pickaxe" unbreakable="true">
+			<enchantment>efficiency</enchantment>
+		</item>
+		<item slot="3" material="diamond axe" unbreakable="true">
+			<enchantment>efficiency</enchantment>
+		</item>
+        <item slot="4" amount="64" material="golden carrot"/>
+		<item slot="5" material="golden apple"/>
+        <item slot="6" amount="64" damage="2" material="wood"/>
+        <item slot="33" amount="64" damage="2" material="wood"/>
+        <item slot="7" amount="64" material="glass"/>
+        <item slot="28" material="arrow"/>
+    </kit>
+</kits>
+<wools wool-proximity-metric="none">
+    <wool team="red-team" color="orange" location="-406.5,14.5,-112.5">
+        <monument>
+            <block>-647,10,-63</block>
+        </monument>
+    </wool>
+    <wool team="red-team" color="yellow" location="-406.5,14.5,-10.5">
+        <monument>
+            <block>-647,10,-61</block>
+        </monument>
+    </wool>
+    <wool team="blue-team" color="lime" location="-630.5,14.5,-10.5">
+        <monument>
+            <block>-391,10,-61</block>
+        </monument>
+    </wool>
+    <wool team="blue-team" color="purple" location="-630.5,14.5,-112.5">
+        <monument>
+            <block>-391,10,-63</block>
+        </monument>
+    </wool>
+</wools>
+<spawns>
+    <spawn team="blue-team" kit="spawn-kit">
+        <regions yaw="90">
+            <point>-393.5,9,-61.5</point>
+        </regions>
+    </spawn>
+    <spawn team="red-team" kit="spawn-kit">
+        <regions yaw="-90">
+            <point>-643.5,9,-61.5</point>
+        </regions>
+    </spawn>
+    <default>
+        <regions yaw="-90">
+            <point>-518.5,45,-61.5</point>
+        </regions>
+    </default>
+</spawns>
+<filters>
+    <not id="no-can-place">
+        <any id="can-break">
+            <team id="only-red">red-team</team>
+            <team id="only-blue">blue-team</team>
+        </any>
+    </not>
+    <all id="only-red-wool">
+        <team>red-team</team>
+        <not>
+            <team>blue-team</team>
+        </not>
+    </all>
+    <all id="only-blue-wool">
+        <team>blue-team</team>
+        <not>
+            <team>red-team</team>
+        </not>
+    </all>
+    <not id="deny-void">
+        <void/>
+    </not>
+    <any id="only-iron">
+        <material>iron block</material>
+        <material>leaves 2</material>
+        <material>log 2</material>
+    </any>
+</filters>
+<regions>
+    <above id="above-26" y="26"/>
+    <apply block="never">
+        <region>
+            <block>-519,2,-62</block> <!-- spawners -->
+        </region>
+    </apply>
+    <apply block="only-blue-wool" use="only-blue-wool" enter="only-blue" message="You may not enter or modify your own wool room!">
+        <region>
+            <cylinder base="-630.5,14,-10.5" radius="6.5" height="12"/> <!-- lime -->
+			<cylinder base="-630.5,14,-112.5" radius="6.5" height="12"/> <!-- purple -->
+        </region>
+    </apply>
+    <apply block="only-red-wool" use="only-red-wool" enter="only-red" message="You may not enter or modify your own wool room!">
+        <region>
+			<cylinder base="-406.5,14,-10.5" radius="6.5" height="12"/> <!-- yellow -->
+			<cylinder base="-406.5,14,-112.5" radius="6.5" height="12"/> <!-- orange -->
+        </region>
+    </apply>
+    <apply block-place="no-can-place" block-break="only-iron" message="You may only break iron in the spawn!">
+        <region>
+            <union id="spawns">
+                <rectangle min="-614,-54" max="-648,-69"/> <!-- red -->
+                <rectangle min="-423,-69" max="-389,-54"/> <!-- blue -->
+            </union>
+        </region>
+    </apply>
+	<apply enter="only-red" message="You may not enter the enemy spawn!">
+		<region>
+			<rectangle min="-614,-54" max="-648,-69"/>
+		</region>
+	</apply>
+	<apply enter="only-blue" message="You may not enter the enemy spawn!">
+		<region>
+			<rectangle min="-423,-69" max="-389,-54"/>
+		</region>
+	</apply>
+    <apply block-break="can-break"/>
+    <apply block="deny-void" message="You may not build in the void!">
+        <region>
+            <negative>
+                <union>
+					<circle center="-518.5,-61.5" radius="51"/> <!-- middle circle -->
+					<circle center="-630.5,-10.5" radius="31"/> <!-- lime area -->
+					<circle center="-630.5,-112.5" radius="31"/> <!-- purple area -->
+					<circle center="-406.5,-10.5" radius="31"/> <!-- yellow area -->
+					<circle center="-406.5,-112.5" radius="31"/> <!-- orange area -->
+					<rectangle min="-613,-25" max="-416,-45"/> <!-- south rect -->
+					<rectangle min="-424,-98" max="-621,-78"/> <!-- north rect -->
+					<rectangle min="-570,-98" max="-467,-25"/> <!-- inner square -->
+					<rectangle min="-447,-51" max="-424,-22"/> <!-- water SE corner -->
+					<rectangle min="-590,-51" max="-613,-22"/> <!-- water SW corner -->
+					<rectangle min="-590,-72" max="-613,-101"/> <!-- water NW corner -->
+					<rectangle min="-447,-72" max="-424,-101"/> <!-- water SE corner -->
+                </union>
+            </negative>
+        </region>
+    </apply>
+    <apply block="never" region="above-26"/>
+</regions>
+<renewables>
+    <renewable interval="5s" grow="true" avoid-players="1" region="spawns">
+        <renew-filter>
+            <material>iron block</material>
+        </renew-filter>
+        <replace-filter>
+            <material>air</material>
+        </replace-filter>
+    </renewable>
+</renewables>
+<gamerules>
+    <doDaylightCycle>false</doDaylightCycle>
+</gamerules>
+<maxbuildheight>26</maxbuildheight>
+<crafting>
+	<disable>minecart</disable>
+	<disable>iron trapdoor</disable>
+</crafting>
+<kill-reward>
+    <item>golden apple</item>
+    <item amount="32" damage="2" material="wood"/>
+    <item amount="16" material="glass"/>
+</kill-reward>
+<toolrepair>
+    <tool>iron sword</tool>
+    <tool>bow</tool>
+    <tool>diamond pickaxe</tool>
+    <tool>diamond axe</tool>
+</toolrepair>
+<itemremove>
+    <item>wood</item>
+    <item>golden carrot</item>
+    <item>glass</item>
+</itemremove>
+<respawn delay="5s"/>
+</map>

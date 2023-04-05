@@ -1,0 +1,56 @@
+<map protocol="2.0.0">
+  <meta>
+    <name>Forge RFW</name>
+    <version>1.2.2</version>
+    <creators>
+      <creator>Nixani</creator>
+      <creator>Strangey</creator>
+    </creators>
+  </meta>
+  <teams>
+    <team color="RED">
+      <name>Left</name>
+      <spawn>
+        <location pos="64,173,-126" yaw="-90" />
+      </spawn>
+    </team>
+    <team color="BLUE">
+      <name>Right</name>
+      <spawn>
+        <location pos="64,173,-95" yaw="-90" />
+      </spawn>
+    </team>
+  </teams>
+  <startregion spawn="60,177,-110,-90">
+    <cuboid min="11,167,-134" max="73,194,-87" />
+  </startregion>
+  <regions>
+    <cuboid min="69,0,-133" max="406,256,-119">
+      <owner>Left</owner>
+    </cuboid>
+    <cuboid min="69,0,-102" max="406,256,-88">
+      <owner>Right</owner>
+    </cuboid>
+  </regions>
+  <goals>
+    <teamgoals team="Left">
+      <block pos="277,150,-132" id="35,1" />
+      <block pos="284,148,-130" id="35,2" />
+      <block pos="270,146,-130" id="35,5" />
+    </teamgoals>
+    <teamgoals team="Right">
+      <block pos="284,148,-91" id="35,2" />
+      <block pos="277,150,-89" id="35,1" />
+      <block pos="270,146,-91" id="35,5" />
+    </teamgoals>
+  </goals>
+  <mechanisms>
+    <lever pos="58,175,-111">true</lever>
+    <lever pos="63,174,-102">true</lever>
+    <lever pos="63,174,-119">true</lever>
+  </mechanisms>
+  <gameplay>
+    <clockstart>8am</clockstart>
+  </gameplay>
+  <protect />
+</map>

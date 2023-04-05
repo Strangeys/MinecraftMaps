@@ -1,0 +1,158 @@
+<map proto="1.4.0">
+<time overtime="1m" max-overtime="15m">45m</time>
+<name>Highlands</name>
+<version>1.6.4</version>
+<objective>Destroy the enemy's emerald monument and leak their core!</objective>
+<authors>
+    <author uuid="621b2aa8-4e5f-4ed8-bd36-0ae2f8952a06"/> <!-- thestrangeboy1 -->
+</authors>
+<contributors>
+    <contributor uuid="6bec5c3a-4934-4b19-9aa8-c7c569820f7d"/> <!-- xCLAFx -->
+    <contributor uuid="e37f18f1-117b-47db-8806-6d3a0854b518"/> <!-- chickolympics -->
+</contributors>
+<teams>
+    <team id="blue" color="blue" min="6" max="8" max-overfill="8">Blue</team>
+    <team id="red" color="dark red" min="6" max="8" max-overfill="8">Red</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <item slot="0" unbreakable="true" material="diamond sword"/>
+        <item slot="1" unbreakable="true" material="bow">
+            <enchantment>infinity</enchantment>
+        </item>
+        <item slot="28" material="arrow"/>
+        <item slot="2" unbreakable="true" material="diamond pickaxe"/>
+        <item slot="3" unbreakable="true" material="diamond axe"/>
+        <item slot="4" amount="64" damage="5" material="wood"/>
+        <item slot="31" amount="64" damage="5" material="wood"/>
+        <item slot="5" amount="64" material="glass"/>
+        <item slot="32" amount="64" material="smooth brick"/>
+        <item slot="6" amount="32" material="ladder"/>
+        <item slot="7" prevent-sharing="true" material="golden apple"/>
+        <item slot="8" amount="64" material="golden carrot"/>
+        <chestplate unbreakable="true" material="chainmail chestplate"/>
+    </kit>
+    <kit id="blue-kit" parents="spawn-kit">
+        <boots unbreakable="true" color="0066cc" material="leather boots"/>
+    </kit>
+    <kit id="red-kit" parents="spawn-kit">
+        <boots unbreakable="true" color="cd0000" material="leather boots"/>
+    </kit>
+</kits>
+<spawns>
+    <default>
+        <region yaw="90">
+            <point>11,23.5,-35</point>
+        </region>
+    </default>
+    <spawn team="blue" kit="blue-kit">
+        <region yaw="180">
+            <block>-45.5,94.5,97.5</block>
+        </region>
+    </spawn>
+    <spawn team="red" kit="red-kit">
+        <region yaw="0">
+            <block>-45.5,94.5,-167.5</block>
+        </region>
+    </spawn>
+</spawns>
+<filters>
+    <not id="no-void">
+        <void/>
+    </not>
+    <team id="only-blue">blue</team>
+    <team id="only-red">red</team>
+    <deny id="no-stone">
+        <material>stone</material>
+    </deny>
+</filters>
+<regions>
+    <negative id="void-area">
+        <rectangle id="map" min="-6,-112" max="-85,42"/>
+    </negative>
+    <union id="spawns">
+        <rectangle min="-58,62" max="-32,100"/>
+        <rectangle min="-33,-132" max="-58,-170"/>
+    </union>
+    <apply block="no-void" region="void-area"/>
+    <apply block="never" message="You may not edit the spawn area!" region="spawns"/>
+    <apply block-place="no-stone"/>
+</regions>
+<cores material="obsidian" leak="3" proximity-metric="none" modes="gold-core ice-core">
+    <core team="blue">
+        <region>
+            <cuboid min="-12,22,3" max="-18,28,9"/>
+        </region>
+    </core>
+    <core team="red">
+        <region>
+            <cuboid min="-79,22,-79" max="-73,28,-73"/>
+        </region>
+    </core>
+</cores>
+<modes>
+    <mode id="gold-core" after="10m" material="gold block" name="`6GOLD CORE MODE"/>
+    <mode id="ice-core" after="25m" material="packed ice" name="`3PACKED ICE CORE MODE"/>
+</modes>
+<destroyables name="Monument" materials="emerald block" completion="100%" proximity-metric="none">
+    <destroyable owner="blue">
+        <region>
+            <cuboid min="-76,27,2" max="-79,22,5"/>
+        </region>
+    </destroyable>
+    <destroyable owner="red">
+        <region>
+            <cuboid min="-12,27,-75" max="-15,22,-72"/>
+        </region>
+    </destroyable>
+</destroyables>
+<toolrepair>
+    <tool>diamond sword</tool>
+    <tool>bow</tool>
+    <tool>diamond pickaxe</tool>
+    <tool>diamond axe</tool>
+    <item>arrow</item>
+</toolrepair>
+<itemremove>
+    <item damage="5">126</item>
+    <item>dirt</item>
+    <item>seeds</item>
+    <item>38</item>
+    <item>iron trapdoor</item>
+    <item>trap door</item>
+    <item>item frame</item>
+    <item>torch</item>
+    <item>flower pot</item>
+    <item>carpet</item>
+    <item>book</item>
+    <item>birch wood stairs</item>
+    <item>wood stairs</item>
+    <item damage="5">wood</item>
+    <item damage="14">stained clay</item>
+    <item damage="11">stained clay</item>
+    <item>emerald block</item>
+    <item>glass</item>
+    <item>ladder</item>
+    <item>chainmail chestplate</item>
+    <item>leather boots</item>
+    <item>golden apple</item>
+    <item>golden carrot</item>
+    <item>obsidian</item>
+    <item>gold block</item>
+    <item>smooth brick</item>
+</itemremove>
+<kill-reward>
+    <item damage="8261">373</item>
+    <item amount="32" damage="5">wood</item>
+    <item amount="32">glass</item>
+</kill-reward>
+<tnt>
+    <dispenser-tnt-limit>0</dispenser-tnt-limit>
+    <dispenser-tnt-multiplier>0</dispenser-tnt-multiplier>
+</tnt>
+<crafting>
+    <disable>iron trapdoor</disable>
+</crafting>
+<respawn auto="true"/>
+<maxbuildheight>50</maxbuildheight>
+</map>
